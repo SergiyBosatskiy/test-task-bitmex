@@ -35,15 +35,19 @@ export default {
     }
   },
   methods: {
-    createOrder(side) {
-      if (this.volume >= 0) {
-        createNewOrder({
-          ordType: 'Market',
-          symbol: this.selectedSymbol,
-          orderQty: this.volume,
-          side,
-        })
-        this.$emit('update-order-history')
+    async createOrder(side) {
+      try {
+        if (this.volume >= 0) {
+          await createNewOrder({
+            ordType: 'Market',
+            symbol: this.selectedSymbol,
+            orderQty: this.volume,
+            side,
+          })
+          this.$emit('update-order-history')
+        }
+      } catch (err) {
+        console.log(err)
       }
     },
   }
